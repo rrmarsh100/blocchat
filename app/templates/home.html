@@ -1,9 +1,15 @@
-<section>
-  <div>
 
-    <h1>Bloc Chat</h1>
+<div class="wrap">
+    <div class="nav-bar">
 
-    <p ng-repeat="room in home.rooms">{{ room.$value }}</p>
+        <div class="hero-title">Bloc Chat</div>
+        <button class="new-room-button" type="button" ng-click="home.openNewRoomModal()">New room</button>
 
-  </div>
-</section>
+        <ul class="rooms-list">
+            <li class="room-name" ng-repeat="room in home.chatRoomArray" ng-click="home.setCurrentRoom(room)">
+                  {{room.$value}}
+            </li>
+        </ul>
+
+    </div>
+</div>
