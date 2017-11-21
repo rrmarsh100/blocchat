@@ -1,15 +1,30 @@
 
-<div class="wrap">
-    <div class="nav-bar">
-
-        <div class="hero-title">Bloc Chat</div>
-        <button class="new-room-button" type="button" ng-click="home.openNewRoomModal()">New room</button>
-
-        <ul class="rooms-list">
-            <li class="room-name" ng-repeat="room in home.chatRoomArray" ng-click="home.setCurrentRoom(room)">
-                  {{room.$value}}
-            </li>
-        </ul>
-
+<div id="sidebar" class="col-lg-3 col-sm-1">
+  <div class="header">
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default pull-right glyphicon glyphicon-plus"  ng-click="addNew()"></button>
+      </div>
     </div>
+    <h1><span class="accent">Bloc</span>Chat</h1>
+  </div>
+  <div class="roomslist">
+    <ul>
+      <li ng-repeat="room in rooms | orderBy: '$value'" ng-click="setActiveRoom(room)" ng-class="{ active: room == activeRoom }">
+        {{ room.$value }}
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="chatroom" class="col-md-9">
+  <div class="header">
+    <h3 id="chatroom-name">{{ activeRoom.$value }}</h3>
+  </div>
+  <div class="chat">
+    <div class="chat-message" ng-repeat="message in messages | orderBy: 'sentAt'">
+      <p class="chat-author">{{ message.username }}</p>
+      <p class="chat-time">{{ message.sentAt | date: 'medium' }}</p>
+      <p class="chat-text">{{ message.content }}</p>
+    </div>
+  </div>
 </div>

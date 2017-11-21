@@ -1,18 +1,26 @@
 (function() {
-    function HomeCtrl(Room, $uibModal) {
-        var home = this;
-        home.chatRoomArray = Room.all;
+  function HomeCtrl(Room, $uibModal, $scope, Message) {
+    $scope.rooms = Room.all;
+    $scope.activeRoom = null;
 
-        home.openNewRoomModal = function() {
-        	var modalInstance = $uibModal.open({
-        		templateUrl: '/templates/new_room_modal.html',
-        		controller: 'ModalCtrl',
-        		controllerAs: 'modal'
-        	});
-        };
+    $scope.setActiveRoom = function(room) {
+      $scope.activeRoom = room;
+      $scope.messages = Message.getByRoomId($scope.activeRoom.$id);
+      console.log("The active room is now " + $scope.activeRoom.$value + " with roomId " + $scope.activeRoom.$id);
+      console.log("There are " + $scope.messages);
     };
 
-    angular
-        .module('blocChat')
-        .controller('HomeCtrl', ['Room', '$uibModal', HomeCtrl]);
+    $scope.addNew = function() {
+      console.log('Opening modal');
+      var modalInstance = $uibModal.open({
+        templateUrl:    '/templates/new_room_modal.html',
+        controller:     'ModalCtrl',
+        controllerAs:   '$modal'
+      });
+    }
+  }
+
+  angular
+    .module('blocChat')
+    .controller('HomeCtrl', ['Room', '$uibModal', '$scope', 'Message', HomeCtrl]);
 })();

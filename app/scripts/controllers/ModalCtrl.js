@@ -1,26 +1,21 @@
 (function() {
-    function ModalCtrl(Room, $uibModalInstance) {
-        var modal = this;
+  function ModalCtrl($scope, $uibModalInstance, Room) {
+    var $modal = this;
 
-        modal.chatRoomArray = Room.all;
-        modal.statusBar = "Enter a room name";
-
-        modal.addData = function() {
-            if(modal.inputData) {
-                Room.addNewRoom(modal.inputData);
-                modal.cancel();
-            } else {
-                alert("Room name should not be empty.");
-            }
-        };
-
-        modal.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
-
+    /* Close modal without saving changes on click of cancel button or press of Esc button */
+    $modal.cancel = function() {
+      console.log('Cancelling process to create new room');
+      $uibModalInstance.dismiss();
     };
 
-    angular
-        .module('blocChat')
-        .controller('ModalCtrl', ['Room', '$uibModalInstance', ModalCtrl]);
+    /* Save new room name and add new room to rooms array on click of create button */
+    $modal.save = function() {
+      Room.add($modal.newroom);
+      $uibModalInstance.close();
+    };
+  }
+
+  angular
+    .module('blocChat')
+    .controller('ModalCtrl', ['$scope', '$uibModalInstance', 'Room', ModalCtrl])
 })();
