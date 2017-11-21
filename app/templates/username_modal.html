@@ -1,0 +1,24 @@
+<div id="username-modal">
+  <div class="modal-header">
+    <h2 class="modal-title">
+      Set a username
+    </h2>
+  </div>
+  <div class="modal-body">
+    <div class="form-group form-group-lg">
+      <form name="form.UserForm">
+        <input type="text" class="form-control" name="username" placeholder="Username" ng-model="$userModal.username" ng-minlength="3" ng-maxlength="20" ng-required="true" ng-class="{ error: form.UserForm.username.$pristine || form.UserForm.username.$invalid }" />
+        <span class="help-block" ng-show="form.UserForm.username.$pristine || form.UserForm.username.$invalid">Username must be 3-20 characters</span>
+        <span class="help-block glyphicon glyphicon-ok" ng-show="form.UserForm.username.$valid"></span>
+      </form>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <!-- UNCOMMENT FOR DEBUGGING ONLY -->
+    <!-- <p>New username: {{ $userModal.username }}</p> -->
+    <button type="button" class="btn btn-lg btn-success" ng-click="$userModal.save()" ng-disabled="form.UserForm.username.$invalid">
+      Set username
+    </button>
+  </div>
+</div>

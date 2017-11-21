@@ -4,12 +4,15 @@
       New chatroom
     </h2>
   </div>
-  <div class="modal-body">
-    <div class="form-group form-group-lg">
-      <input type="text" class="form-control" id="new-chatroom-name" placeholder="Chatroom name" ng-model="$modal.newroom" ng-minlength="5" ng-maxlength="20" />
-      <span class="help-block">Between 5 and 20 characters</span>
-    </div>
-  </div>
+   <div class="modal-body">
+     <div class="form-group form-group-lg">
+       <form name="form.RoomForm">
+         <input type="text" class="form-control" name="chatroom" placeholder="Chatroom name" ng-model="$modal.newroom" ng-minlength="5" ng-maxlength="20" ng-required="true" ng-class="{ error: form.RoomForm.chatroom.$pristine || form.RoomForm.chatroom.$invalid }" />
+         <span class="help-block" ng-show="form.RoomForm.chatroom.$pristine || form.RoomForm.chatroom.$invalid">Chatroom name must be 5-20 characters</span>
+         <span class="help-block glyphicon glyphicon-ok" ng-show="form.RoomForm.chatroom.$valid"></span>
+       </form>
+     </div>
+   </div>
   <div class="modal-footer">
     <!-- UNCOMMENT FOR DEBUGGING ONLY -->
     <!-- <p>New chatroom name: {{ $modal.newroom }}</p> -->
