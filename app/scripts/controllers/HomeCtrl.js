@@ -1,5 +1,5 @@
 (function() {
-  function HomeCtrl(Room, $uibModal, $scope, Message) {
+  function HomeCtrl(Room, $uibModal, $scope, Message, $cookies) {
     $scope.rooms = Room.all;
     $scope.activeRoom = null;
 
@@ -18,9 +18,26 @@
         controllerAs:   '$modal'
       });
     }
+
+
+    $scope.sendMessage = function() {
+      console.log("Message to save is: " + $scope.messageContent);
+      console.log("User is " + $cookies.blocChatCurrentUser);
+      console.log("Active room is " + $scope.activeRoom.$id);
+      var newMessage = {
+        content:  $scope.messageContent,
+        username: $cookies.get('blocChatCurrentUser'),
+        roomId:   $scope.activeRoom.$id
+      };
+      Message.send(newMessage);
+
+      // Clears input area after sending message
+      $scope.input.Message.$setPristine();
+      $scope.messageContent = null;
+    }
   }
 
   angular
     .module('blocChat')
-    .controller('HomeCtrl', ['Room', '$uibModal', '$scope', 'Message', HomeCtrl])
+    .controller('HomeCtrl', ['Room', '$uibModal', '$scope', 'Message', '$cookies', HomeCtrl])
 })();
